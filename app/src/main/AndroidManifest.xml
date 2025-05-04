@@ -23,6 +23,13 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".AccommodationSearch"/>
+        <activity android:name=".RoomPreview"/>
+        <activity android:name=".PaymentActivity"/>
+        <activity android:name=".activity_details"/>
+        <activity android:name=".activity_profile"/>
+        <activity android:name=".activity_orders"/>
+        <activity android:name=".activity_listingform"/>
 
 
     </application>

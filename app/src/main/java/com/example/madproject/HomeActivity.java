@@ -1,5 +1,6 @@
 package com.example.madproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,9 @@ public class HomeActivity extends AppCompatActivity {
             String location = locationInput.getText().toString();
             String date = dateInput.getText().toString();
             String guests = guestsInput.getText().toString();
-            Toast.makeText(this, "Searching: " + location, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeActivity.this, AccommodationSearch.class);
+            startActivity(intent);
+            finish();
         });
 
         // RecyclerViews

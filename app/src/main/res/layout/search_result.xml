@@ -75,9 +75,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@color/bottom_nav_icon_color"
-        app:itemTextColor="@color/bottom_nav_item_text_color"/>
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_menu"
+        />
+
+
+
 
 </RelativeLayout>

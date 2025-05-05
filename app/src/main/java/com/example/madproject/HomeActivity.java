@@ -1,17 +1,23 @@
 package com.example.madproject;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -25,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
     List<City> cityList;
     List<Place> placeList;
 
+    BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +43,27 @@ public class HomeActivity extends AppCompatActivity {
         dateInput = findViewById(R.id.dateInput);
         guestsInput = findViewById(R.id.guestsInput);
         searchButton = findViewById(R.id.searchButton);
+
+        // Date Picker Dialog
+        dateInput.setFocusable(false);
+        dateInput.setClickable(true);
+        dateInput.setOnClickListener(v -> {
+            final Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    HomeActivity.this,
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        dateInput.setText(selectedDate);
+                    },
+                    year, month, day
+            );
+
+            datePickerDialog.show();
+        });
 
         searchButton.setOnClickListener(v -> {
             String location = locationInput.getText().toString();
@@ -65,11 +94,38 @@ public class HomeActivity extends AppCompatActivity {
         placeList.add(new Place(R.drawable.gulmarg, "Gulmarg"));
         placeList.add(new Place(R.drawable.jaipur, "Amber Palace"));
         placeList.add(new Place(R.drawable.kolkata, "Victoria Memorial"));
-        placeList.add(new Place(R.drawable.dal_lake,"Dal Lake"));
+        placeList.add(new Place(R.drawable.dal_lake, "Dal Lake"));
 
         placeAdapter = new PlaceAdapter(placeList);
         favoritePlacesRecycler.setLayoutManager(new GridLayoutManager(this, 2));
-
         favoritePlacesRecycler.setAdapter(placeAdapter);
+
+        // Bottom Navigation
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.nav_home) {
+                    // Already on Home
+                    return true;
+                } else if (itemId == R.id.nav_orders) {
+                    startActivity(new Intent(HomeActivity.this, activity_orders.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                } else if (itemId == R.id.nav_profile) {
+                    startActivity(new Intent(HomeActivity.this, activity_profile.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

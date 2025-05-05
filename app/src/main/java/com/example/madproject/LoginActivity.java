@@ -73,16 +73,16 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                // --- End Firebase Authentication Logic ---
+
             }
         });
     }
 
-    // Optional: Check if user is already signed in when the activity starts
+
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             // User is already signed in, navigate to HomeActivity
